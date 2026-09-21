@@ -1,6 +1,6 @@
 # Current state
 
-## Status: local MVP implemented, Vercel project linked, deployment pending
+## Status: MVP pushed to GitHub, Vercel deployment pending
 
 As of 2026-09-21, the frontend application builds and runs locally. Required concept controls, procedural shell, section view, real sidewall cutouts, placement warnings, history, autosave, named saves, and JSON format are implemented. Git was initialized locally with main and the user-provided GitHub repository as origin. The remote advertised no branches or tags before the initial push.
 
@@ -16,7 +16,7 @@ As of 2026-09-21, the frontend application builds and runs locally. Required con
 
 - Target repository: https://github.com/ConfigMage/andrewtraileriguess.git.
 - Git was initialized after the MVP build. Networked Git commands under the Windows user need a per-command safe.directory setting because the sandbox service identity owns .git. No global Git trust setting was changed.
-- The GitHub CLI reported an invalid token. Git push uses Git Credential Manager and must be checked independently.
+- The GitHub CLI reported an invalid token, but Git Credential Manager authenticated the push. GitHub main and the local checkout were verified aligned after the initial push.
 
 ## Verification completed
 
