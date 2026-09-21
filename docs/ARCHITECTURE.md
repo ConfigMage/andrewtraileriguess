@@ -24,6 +24,12 @@ Section mode clips the body at the chosen X and adds explicit cross-section geom
 
 Body dimensions are direct document values. Tongue-inclusive overall length adds a fixed 1.20 m. Wheel-inclusive width adds 0.34 m to body width based on the displayed chassis. The approximate interior floor area integrates the nose half-width minus wall inset using 100 midpoint samples. Surface area, shell volume, mass, cost, and fabrication time are not reported.
 
+
+## Print planning slice
+
+src/model/printPlanning.ts validates a separate machine setup and calculates axis-aligned fit and one-extrusion-width checks. The setup uses meters internally and is stored under trailer-lab-print-setup-v1 by src/store/printStore.ts. It is not part of the version-1 trailer design, undo history, named designs, or JSON export. Invalid saved setup falls back to blank values; storage write failure leaves the current setup in memory and displays a notice.
+
+The fit check compares the unrotated shell body length, maximum body width, and exterior body height with user-entered usable build dimensions. Its reference box starts at the shell's front center and floor underside, in the same translated group as the body. The check excludes chassis, tongue, support material, tool access, and rotation. Wall, roof, and floor thickness are compared separately with one user-entered extrusion width. Passing these arithmetic checks does not establish printability, strength, or a validated machine profile. No machine defaults are assumed.
 ## Recovery and future seams
 
 JSON is capped at 1 MB and 40 openings. Import validates a plain object before replacing state, rejects unknown schema versions, and has an explicit migration entry function. Corrupt autosave loads the Adventure Prototype and shows a notice. Browser storage exceptions are caught. A WebGL2 precheck shows a text fallback while other controls remain available. Generated meshes are memoized by design dependencies and disposed when replaced.

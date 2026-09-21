@@ -14,3 +14,7 @@ The earlier conversation's package-version statements were not adopted as curren
 - [Vite 8 release guidance](https://vite.dev/blog/announcing-vite8) states Node 20.19+ or 22.12+ and confirms Vite 8 is stable. [Vitest 4 guide](https://v4.vitest.dev/guide/) requires Vite 6+ and Node 20+.
 - [Vite React plugin changelog](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/CHANGELOG.md) says plugin-react 6 supports Vite 8 and drops Vite 7 support. npm also rejected plugin-react 5 with Vite 8 during installation, and installation succeeded after pinning plugin-react 6.
 - [drei releases](https://github.com/pmndrs/drei/releases) identified 10.7 as the stable release line; 11 was alpha at verification. Exact pinned package versions were resolved through npm and recorded in `package-lock.json`.
+
+## Print setup check on 2026-09-21
+
+- [Prusa Knowledge Base: Modeling with 3D printing in mind](https://help.prusa3d.com/article/modeling-with-3d-printing-in-mind_164135?product=core-one-plus) explains that features thinner than one perimeter are not printable in its FFF context and that orientation and support needs matter. The app therefore uses one user-entered extrusion width as a minimal sanity check, not a guarantee of printability or strength. No Prusa nozzle size or process setting was copied as a trailer default.

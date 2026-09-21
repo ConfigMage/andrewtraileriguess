@@ -4,7 +4,7 @@ Evidence date: 2026-09-21. Commands ran in `C:\Project\FredricksonTrailerideaIgu
 
 | Check | Evidence and actual result | Status |
 | --- | --- | --- |
-| Typecheck, lint, tests, build | `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build`. All passed; 10 tests. Build gave a large-chunk warning. | Pass |
+| Typecheck, lint, tests, build | `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build`. All passed; 15 tests. Build gave a large-chunk warning. | Pass |
 | Lockfile | `npm ls --depth=0` resolved all pinned packages; `npm ci --dry-run --offline --ignore-scripts --no-audit --no-fund` completed. | Pass |
 | Units and parameters | Tests covered conversion stability, rounding carry, nonfinite and impossible dimensions. Browser switch showed 16 ft as 4.88 m without altering the model. Minimum and maximum body parameters rendered. | Pass |
 | Profiles | Tests established distinct sampled nose widths and roof side heights. Browser selected all 12 combinations; canvas remained mounted. Flat and teardrop/rounded appearances were visually inspected. | Pass with limited visual sampling |
@@ -17,8 +17,9 @@ Evidence date: 2026-09-21. Commands ran in `C:\Project\FredricksonTrailerideaIgu
 | JSON files | Tests covered version-1 round trip, malformed JSON, unsupported version, size limit, and duplicate IDs. Browser malformed file import showed `Import failed. Current design kept` while the design remained visible. Valid browser upload and download were not checked. | Partial |
 | Recovery and accessibility | Code prechecks WebGL2, validates candidates, catches storage errors, provides labeled controls and visible focus. No forced WebGL failure, browser storage denial, screen-reader, keyboard-only, or measured contrast check. | Unverified manual gate |
 | Production preview | `npm run preview` at 127.0.0.1:4173 showed the Adventure model and section in a browser. | Pass |
+| Print setup | Deterministic tests cover blank and partial settings, exact and undersized build dimensions, one-width thickness threshold, invalid saved values, and storage-write failure. Production preview showed the Family shell fit a 30 x 10 x 11 ft box, then exceed a 30 x 8 x 11 ft box by 11.9 in in width. A 30 mm extrusion width flagged the 28 mm wall. Metric display converted the same machine values and refresh restored them. Temporary values were cleared. The 3D box was visually inspected in both colors and the browser reported no console errors. | Pass for local checks; slicer and target hardware unverified |
 | Performance | No sustained interaction, memory-growth, or FPS measurement. | Unverified |
-| Repository state | `git status --short` reported `fatal: not a git repository`; no Git diff was available. Generated `node_modules/` and `dist/` are ignored by the scaffold `.gitignore`. | Not applicable |
+| Repository state | Git main tracks the user-provided GitHub origin. Generated node_modules, dist, and local Vercel metadata are ignored. The print setup diff contains only source and documentation for this slice; generated files remain ignored. | Pass |
 
 ## Requirement map
 

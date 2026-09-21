@@ -4,10 +4,12 @@ import { Grid, OrbitControls, Line, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { axlePositions } from '../model/rules'
+import { checkPrintSetup } from '../model/printPlanning'
 import { openingBounds, sideZ, wallTopY } from '../model/profiles'
 import { formatLength } from '../model/units'
 import type { Design, Opening, Side } from '../model/types'
 import { useDesignStore, type ViewState } from '../store/designStore'
+import { usePrintStore } from '../store/printStore'
 import { endGeometry, floorGeometry, roofGeometry, sectionGeometry, wallGeometry } from './geometry'
 
 function useDisposableGeometry(factory: () => THREE.BufferGeometry, dependencies: readonly unknown[]) {
@@ -89,6 +91,17 @@ function DimensionLines({ design, unit }: { design: Design; unit: ViewState['uni
     <Html position={[L+0.26,-0.35,0]} center className="dimension-tag">{formatLength(body.width,unit)}</Html>
   </group>
 }
+function BuildEnvelope({ length, width, height, fits }: { length: number; width: number; height: number; fits: boolean }) {
+  const geometry = useDisposableGeometry(() => {
+    const box = new THREE.BoxGeometry(length, height, width)
+    const edges = new THREE.EdgesGeometry(box)
+    box.dispose()
+    return edges
+  }, [length, width, height])
+  return <group position={[length / 2, height / 2, 0]}>
+    <lineSegments geometry={geometry} renderOrder={10}><lineBasicMaterial color={fits ? '#29865f' : '#bb6543'} depthTest={false} transparent opacity={0.9}/></lineSegments>
+  </group>
+}
 function CameraRig({ cameraName, design }: { cameraName: string; design: Design }) {
   const {camera}=useThree(),controls=useRef<OrbitControlsImpl>(null)
   useEffect(()=>{
@@ -102,6 +115,8 @@ function CameraRig({ cameraName, design }: { cameraName: string; design: Design 
   return <OrbitControls ref={controls} makeDefault enableDamping dampingFactor={0.12} minDistance={2} maxDistance={60} screenSpacePanning />
 }
 function World({ design, view, selectedId, select }: { design: Design; view: ViewState; selectedId: string|null; select:(id:string|null)=>void }) {
+  const setup=usePrintStore(state=>state.setup),showEnvelope=usePrintStore(state=>state.showEnvelope)
+  const fit=checkPrintSetup(design.body,setup)
   const cut=Math.max(0.001,Math.min(design.body.length-0.001,design.body.length*view.sectionAt))
   const clip=useMemo(()=>view.section?[new THREE.Plane(new THREE.Vector3(-1,0,0),cut)]:[],[cut,view.section])
   const driver=useDisposableGeometry(()=>wallGeometry(design,'driver'),[design.body,design.openings])
@@ -118,6 +133,7 @@ function World({ design, view, selectedId, select }: { design: Design; view: Vie
     <mesh receiveShadow rotation={[-Math.PI/2,0,0]} position={[design.body.length/2,-0.002,0]}><planeGeometry args={[80,80]}/><meshStandardMaterial color="#dadcd7" roughness={0.98}/></mesh>
     {view.grid&&<Grid position={[design.body.length/2,0.001,0]} args={[60,60]} cellSize={0.5} sectionSize={2} cellColor="#adb7b4" sectionColor="#859590" fadeDistance={35} infiniteGrid />}
     <group position={[0,design.body.clearance,0]}>
+      {showEnvelope&&fit.fits!==null&&<BuildEnvelope length={setup.buildLength!} width={setup.buildWidth!} height={setup.buildHeight!} fits={fit.fits}/>}
       {view.chassis&&<Chassis design={design} clip={clip}/>}
       <group onClick={e=>{e.stopPropagation();select(null)}}>
         <ShellPiece geometry={driver} color={design.material.color} clip={clip} opacity={view.transparent?0.28:1}/>

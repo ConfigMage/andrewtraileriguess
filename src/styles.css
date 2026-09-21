@@ -7,3 +7,28 @@
 .tablet-panel-tabs{display:none}
 .toolbar-main select{min-width:76px;flex:none}
 @media(max-width:800px){.tablet-panel-tabs{display:flex;gap:8px;padding:8px;background:#17262d;border-bottom:1px solid #33464d}.tablet-panel-tabs button{flex:1}.left-panel,.right-panel{display:none;width:100%;height:auto;max-height:430px;order:1}.left-panel.tablet-open,.right-panel.tablet-open{display:flex}.panel-scroll{overflow:auto}.viewport{order:0}}
+
+.print-planning{background:#1c2d32}
+.print-planning h3{align-items:center;gap:5px;margin-bottom:9px}
+.print-planning h3 span{font-size:8px;color:#c5dcce;border:1px solid #4e776b;border-radius:3px;padding:3px 5px;white-space:nowrap}
+.print-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:13px 0}
+.print-field{min-width:0}
+.print-field span{display:block;font-size:10px;color:#c6d5d3;margin-bottom:5px}
+.print-field small{color:#93aaa8;font-weight:400}
+.print-field input{width:100%;font-size:12px}
+.print-status{background:#2c3b41;color:#d8e1dc;padding:9px;border-radius:5px;font-size:11px;font-weight:700;line-height:1.4}
+.print-status.print-pass{background:#244337;color:#b9e0c6}
+.print-status.print-fail{background:#4b332d;color:#f2c3ad}
+.print-axis-list,.print-thickness-list{list-style:none;margin:9px 0 7px;padding:0;display:grid;gap:5px}
+.print-axis-list li,.print-thickness-list li{display:grid;grid-template-columns:1fr auto;gap:2px 5px;padding:7px 8px;border:1px solid #3a5053;border-radius:5px;font-size:10px;color:#b8c9c7}
+.print-axis-list li b,.print-thickness-list li b{font-size:10px;font-weight:600;color:#e7ece9;text-align:right}
+.print-axis-list li small,.print-thickness-list li small{grid-column:1/-1;color:#a9bbb8}
+.print-axis-list li.print-fail,.print-thickness-list li.print-fail{border-color:#a86651;background:#422e2a}
+.print-axis-list li.print-fail small,.print-thickness-list li.print-fail small{color:#f2bca2}
+.print-planning h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#d9ac72;margin:14px 0 7px}
+.print-planning .print-caveat{color:#9fb4b3;font-size:10px;line-height:1.45;margin:8px 0}
+.print-actions{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-top:12px}
+.print-actions label{display:flex;align-items:center;gap:5px;font-size:10px;color:#cad9d5}
+.print-actions input{accent-color:#d1a265}
+.print-actions button{font-size:10px;padding:6px 7px}
+.print-planning .print-storage-notice{font-size:10px;color:#f4b6a6;margin-top:8px}

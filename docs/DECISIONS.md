@@ -90,3 +90,11 @@ Actual trailer use, printer build envelope, polymer properties, deposition proce
 ## Decision log template
 
 Date / decision / alternatives considered / reason / affected contract / validation evidence.
+
+## 2026-09-21 print setup slice
+
+- Machine build dimensions and extrusion width are optional user inputs. Blank values produce no overall fit conclusion. The input limits of 100 m for each build dimension and 200 mm for extrusion width protect the UI from corrupt or extreme values; they are not printer specifications.
+- Fit is an axis-aligned comparison in the shown shell orientation. Allowing automatic rotation would obscure print orientation, support needs, and assembly decisions that the MVP does not model. The build box is a visual reference aligned with the shell floor underside.
+- The one-width check flags only thickness below the entered extrusion width. It does not infer perimeter count, supported overhang, layer adhesion, or strength. Prusa's modeling guidance identifies features thinner than one perimeter as a slicing risk, but real outcomes depend on the machine and slicer.
+- Machine setup is separate from the design document so exporting or loading a trailer does not silently attach local printer assumptions to it. The setup persists in a separate browser key, is not undoable with design history, and can be cleared explicitly.
+- Section measurement remains the next proposed slice after user review. No section inspector was added here.
