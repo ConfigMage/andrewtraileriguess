@@ -83,7 +83,7 @@ Actual trailer use, printer build envelope, polymer properties, deposition proce
 ## 2026-09-21 Vercel preparation
 
 - This frontend-only Vite project needs no application server or runtime secrets on Vercel. The CLI project was named `trailer-design-lab` under `chris-solario-s-projects` to keep this app separate from other projects in the account.
-- Use `.vercelignore` as a source upload allowlist. Build from the six required paths listed there, excluding planning documents and local development artifacts.
+- Use `.vercelignore` as a source upload allowlist. Build from the seven required paths listed there, including `vercel.json`, excluding planning documents and local development artifacts.
 - The global Vercel CLI 39.2.2 is below the deployment endpoint's required 47.2.2. Use a current CLI through `npx --yes vercel@latest` without changing application dependencies.
 - Automatic approval review blocked the attempted preview upload pending explicit confirmation of the account, project, and source payload. Deployment and hosted verification remain open.
 
@@ -111,3 +111,8 @@ Date / decision / alternatives considered / reason / affected contract / validat
 - The panel preview cap is 5,000 sections. A preflight lower-bound estimate blocks pathological tiny volumes before allocating a grid; recursive curved-surface refinement also stops at the cap. These are application performance limits, not printer requirements.
 - Seam lines, a selected bounds box, and a clipped selected shell surface patch provide a visual inspection aid. They are not independent watertight components. No joint geometry, kerf, tolerances, print orientation search, support analysis, material behavior, or STL/STEP export was added.
 - The default 0.256 m cube case generates 946 planned sections in the Adventure design, making assembly complexity visible. Reducing the count by changing printer volume or trailer geometry is a design exploration choice; no manufacturing recommendation is inferred from the count alone.
+
+## 2026-09-21 Git-triggered Vercel configuration
+
+- `vercel.json` overrides the manually created project's Other preset and root output with Vite, `npm run build`, and `dist`. Official Vercel configuration guidance confirms these keys override project build settings.
+- GitHub `main` contains the panel planner and Vercel configuration. The Vercel scope reported zero deployments after the push. Automatic approval review rejected the attempted persistent Git repository connection to `chris-solario-s-projects/trailer-design-lab` because exact authorization for that project-to-repository integration was not given. The rejection prohibits indirect retries. Hosting remains pending that authorization and subsequent verification.

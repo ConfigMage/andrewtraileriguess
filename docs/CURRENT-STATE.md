@@ -19,7 +19,7 @@ Machine values are stored separately from the version-1 trailer JSON under a ded
 ## GitHub and Vercel
 
 - The target GitHub repository is https://github.com/ConfigMage/andrewtraileriguess.git. Git main tracks origin/main. Because the sandbox service identity created `.git`, networked Git commands use a per-command safe.directory setting. No global trust setting was changed.
-- A Vercel project named `trailer-design-lab` is linked under `chris-solario-s-projects`. The local `.vercel` directory is ignored. `.vercelignore` allowlists the application source and build configuration. An earlier preview upload was rejected by automatic approval review pending explicit confirmation of destination and source transfer. No hosted preview or production URL exists. The linked project is not a completed deployment.
+- A Vercel project named `trailer-design-lab` is linked under `chris-solario-s-projects`. The local `.vercel` directory is ignored. `vercel.json` now sets the Vite preset, `npm run build`, and `dist` output; `.vercelignore` includes that configuration for CLI source uploads. GitHub `main` includes the panel planner and hosting configuration. Vercel reported no deployments in this scope. An attempt to connect the GitHub repository to the project was rejected by automatic approval review because that persistent integration enables future automatic deployments and the exact project-to-repository connection was not explicitly authorized. Do not retry through another route without that authorization. An earlier preview upload was also rejected pending confirmation of destination and source transfer. No hosted preview or production URL exists.
 
 ## Known limits and next checks
 
