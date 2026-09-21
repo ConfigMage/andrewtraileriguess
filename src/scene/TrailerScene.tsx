@@ -5,12 +5,14 @@ import * as THREE from 'three'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { axlePositions } from '../model/rules'
 import { checkPrintSetup } from '../model/printPlanning'
+import { planPanels } from '../model/panelPlanning'
 import { openingBounds, sideZ, wallTopY } from '../model/profiles'
 import { formatLength } from '../model/units'
 import type { Design, Opening, Side } from '../model/types'
 import { useDesignStore, type ViewState } from '../store/designStore'
 import { usePrintStore } from '../store/printStore'
 import { endGeometry, floorGeometry, roofGeometry, sectionGeometry, wallGeometry } from './geometry'
+import { PanelOverlay } from './PanelOverlay'
 
 function useDisposableGeometry(factory: () => THREE.BufferGeometry, dependencies: readonly unknown[]) {
   const geometry = useMemo(factory, dependencies)
@@ -115,7 +117,8 @@ function CameraRig({ cameraName, design }: { cameraName: string; design: Design 
   return <OrbitControls ref={controls} makeDefault enableDamping dampingFactor={0.12} minDistance={2} maxDistance={60} screenSpacePanning />
 }
 function World({ design, view, selectedId, select }: { design: Design; view: ViewState; selectedId: string|null; select:(id:string|null)=>void }) {
-  const setup=usePrintStore(state=>state.setup),showEnvelope=usePrintStore(state=>state.showEnvelope)
+  const setup=usePrintStore(state=>state.setup),showEnvelope=usePrintStore(state=>state.showEnvelope),showSeams=usePrintStore(state=>state.showSeams),selectedPanel=usePrintStore(state=>state.selectedPanel)
+  const plan=useMemo(()=>planPanels(design,setup),[design,setup])
   const fit=checkPrintSetup(design.body,setup)
   const cut=Math.max(0.001,Math.min(design.body.length-0.001,design.body.length*view.sectionAt))
   const clip=useMemo(()=>view.section?[new THREE.Plane(new THREE.Vector3(-1,0,0),cut)]:[],[cut,view.section])
@@ -146,6 +149,7 @@ function World({ design, view, selectedId, select }: { design: Design; view: Vie
       {view.section&&<ShellPiece geometry={section} color="#ca995c" clip={[]} emissive="#e2af6e"/>}
       {view.structure&&(view.section||view.transparent)&&<Pattern design={design} clip={clip}/>}
       {design.openings.filter(o=>!view.section||o.x<cut).map(o=><OpeningFrame key={o.id} design={design} opening={o} selected={o.id===selectedId} onSelect={()=>select(o.id)} clip={clip} cut={view.section?cut:undefined}/>)}
+      {showSeams&&<PanelOverlay body={design.body} plan={plan} selectedIndex={selectedPanel} clip={clip} source={{ 'passenger wall': passenger, 'driver wall': driver, roof, floor, 'front end': front, 'rear end': rear }}/>}
       {view.dimensions&&<DimensionLines design={design} unit={view.unit}/>}
     </group>
     <CameraRig cameraName={view.camera} design={design}/>

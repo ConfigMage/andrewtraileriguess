@@ -35,3 +35,9 @@ The fit check compares the unrotated shell body length, maximum body width, and 
 JSON is capped at 1 MB and 40 openings. Import validates a plain object before replacing state, rejects unknown schema versions, and has an explicit migration entry function. Corrupt autosave loads the Adventure Prototype and shows a notice. Browser storage exceptions are caught. A WebGL2 precheck shows a text fallback while other controls remain available. Generated meshes are memoized by design dependencies and disposed when replaced.
 
 The version-1 format is the only implemented exporter. GLTF, STL, STEP, printer jobs, engineering analysis, and estimates need separate contracts and validation before implementation. The production Vite bundle currently emits one 1.14 MB JavaScript chunk before gzip. No device-specific frame rate or memory budget has been established.
+
+## Build-volume panel planner
+
+`src/model/panelPlanning.ts` derives six surface families from the design and `PrintSetup`. It uses opening edges as wall grid landmarks, omits wall tiles inside door/window bounds, and recursively subdivides wall/roof tiles when profile curvature would exceed a machine axis. Roof envelopes use conservative bounds from the monotone nose half-width and roof rise. Each result contains an ID, surface family, parameter span, and X/Y/Z bounds in meters. The planner caps preview size at 5,000 panels and returns incomplete or blocked states without allocating an impractical grid.
+
+`PrintPlanningPanel.tsx` shows total and per-surface counts, selected panel dimensions, and opening cut warnings. `printStore.ts` keeps seam visibility and selected panel transient; only machine setup persists. `PanelOverlay.tsx` draws the seam grid and selected bounds, then clips the corresponding generated shell surface to the selected envelope for a visual patch. This is still one source shell mesh per family. The preview does not create independent watertight parts or joint geometry.

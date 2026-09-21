@@ -103,3 +103,11 @@ Date / decision / alternatives considered / reason / affected contract / validat
 
 - User feedback showed that Print setup and Components & print suggested automatic part generation. The interface now names the feature a one-piece whole-shell fit check and states that it does not split the shell.
 - A panel and seam planner is a distinct future slice. It must place cuts around openings, report actual part bounds, and define a joint strategy before claiming to create printable components. A simple color change or box overlay cannot satisfy that goal.
+
+## 2026-09-21 build-volume panel plan
+
+- The planner uses the entered usable build length for X, build height for Y, and build width for Z. This preserves the shown shell orientation and avoids implying an optimized print orientation. It divides the six surface families and reports each planned section's conservative axis-aligned envelope, while keeping machine setup outside design JSON and undo history.
+- Openings are voids in wall sections. Opening edge coordinates become preferred cut landmarks, but small machine dimensions or other nearby openings can force cuts through an opening span. The UI flags those openings instead of claiming a resolved frame or joint.
+- The panel preview cap is 5,000 sections. A preflight lower-bound estimate blocks pathological tiny volumes before allocating a grid; recursive curved-surface refinement also stops at the cap. These are application performance limits, not printer requirements.
+- Seam lines, a selected bounds box, and a clipped selected shell surface patch provide a visual inspection aid. They are not independent watertight components. No joint geometry, kerf, tolerances, print orientation search, support analysis, material behavior, or STL/STEP export was added.
+- The default 0.256 m cube case generates 946 planned sections in the Adventure design, making assembly complexity visible. Reducing the count by changing printer volume or trailer geometry is a design exploration choice; no manufacturing recommendation is inferred from the count alone.

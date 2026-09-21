@@ -32,3 +32,20 @@
 .print-actions input{accent-color:#d1a265}
 .print-actions button{font-size:10px;padding:6px 7px}
 .print-planning .print-storage-notice{font-size:10px;color:#f4b6a6;margin-top:8px}
+.panel-counts{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:10px 0}
+.panel-counts>div{display:flex;justify-content:space-between;gap:7px;border:1px solid #3c5657;border-radius:4px;padding:6px;color:#bcd0ce;font-size:10px;text-transform:capitalize}
+.panel-counts b{color:#f2d6a6}
+.panel-select{display:flex;align-items:center;gap:5px;margin:10px 0;color:#bacbc8;font-size:10px}
+.panel-select label{display:flex;align-items:center;gap:5px}
+.panel-select input{width:58px;font-size:11px;padding:5px}
+.panel-select button{font-size:15px;line-height:1;padding:4px 8px}
+.panel-detail{display:grid;gap:4px;padding:9px;border:1px solid #b87f4c;background:#34413d;border-radius:5px;color:#e9ece5;font-size:10px}
+.panel-detail b{color:#f1c48b;font-size:11px}
+.panel-detail span{text-transform:capitalize}
+.panel-detail small{line-height:1.4;color:#c8d9d3}
+.panel-toggle{display:flex;gap:6px;align-items:center;margin:11px 0;color:#c9d8d3;font-size:10px;cursor:pointer}
+.panel-toggle input{accent-color:#d4a360}
+.print-planning .panel-warning{background:#4b332d;color:#f2c3ad;padding:8px;border-radius:5px;font-size:10px;margin:8px 0}
+.print-fit-details{border-top:1px solid #3c5153;margin-top:12px;padding-top:10px}
+.print-fit-details summary{font-size:10px;font-weight:700;color:#d9ac72;cursor:pointer;margin-bottom:8px}
+.panel-counts button:hover{border-color:#d2a160;background:#304347}

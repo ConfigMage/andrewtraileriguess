@@ -1,6 +1,6 @@
 # Build plan
 
-Slices 0 through 5 and the user-selected print setup Slice 7 are implemented as of 2026-09-21, with manual verification gaps recorded in ACCEPTANCE.md. Optional estimate Slice 6 is deferred. These are execution checkpoints, not approval gates.
+Slices 0 through 5, print setup Slice 7, and panel planning Slice 8 are implemented as of 2026-09-21, with manual verification gaps recorded in ACCEPTANCE.md. Optional estimate Slice 6 is deferred. These are execution checkpoints, not approval gates.
 
 Before each slice record: Decide first: contracts, included scope, excluded scope, and acceptance evidence.
 
@@ -33,3 +33,12 @@ At each exit update CURRENT-STATE.md and ACCEPTANCE.md with actual evidence. Bef
 - Typecheck, lint, and production build passed. The existing large JavaScript chunk warning remains.
 - Production preview showed blank setup without a fit claim; 30 x 10 x 11 ft produced a green box and fit result for the current Family design; 30 x 8 x 11 ft produced a width shortage and orange box; a 30 mm extrusion width flagged the 28 mm wall. Metric display converted the entered machine dimensions, refresh restored them, and the temporary values were cleared.
 - Browser console reported no errors in this run. Full hardware and slicer validation remain open.
+
+## Slice 8: Build-volume panel plan
+
+### Decide first
+
+- Contracts: Use the entered usable X, Z, and Y dimensions as maximum panel envelopes in the current orientation. Divide the six shell surfaces into deterministic planned panels, preserving true shell openings as empty regions. Use the design's canonical meters and regenerate the plan from design and machine values without modifying the version-1 design JSON.
+- Included: per-surface counts, total count, each panel's conservative axis-aligned bounds, seam overlay, selected panel bounds, and warnings where a seam crosses an opening. Avoid an unbounded plan for impractically tiny entered volumes.
+- Excluded: joints, kerf, tolerances, nesting, orientation optimization, production-ready component meshes, STL/STEP export, supports, slicer behavior, structural or roadworthiness claims, and the separately proposed section measurement feature.
+- Acceptance: 0.256 m cube setup yields a finite plan with every reported envelope within its entered limit; changing design or machine dimensions regenerates counts and seams; incomplete settings make no panel claim; tests cover dimensional bounds, openings, deterministic counts, and plan limits; browser inspection confirms count, selection, and visible seams; typecheck, lint, tests, and build pass.

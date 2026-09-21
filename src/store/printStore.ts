@@ -16,9 +16,13 @@ const initial = loadSetup()
 interface PrintState {
   setup: PrintSetup
   showEnvelope: boolean
+  showSeams: boolean
+  selectedPanel: number
   notice: string
   setValue: (field: PrintField, value: number | null) => void
   setShowEnvelope: (value: boolean) => void
+  setShowSeams: (value: boolean) => void
+  setSelectedPanel: (index: number) => void
   clear: () => void
 }
 
@@ -30,16 +34,20 @@ function saveSetup(setup: PrintSetup): string {
 export const usePrintStore = create<PrintState>((set, get) => ({
   setup: initial.setup,
   showEnvelope: true,
+  showSeams: true,
+  selectedPanel: 0,
   notice: initial.notice,
   setValue: (field, value) => {
     try {
       const setup = validatePrintSetup({ ...get().setup, [field]: value })
-      set({ setup, notice: saveSetup(setup) })
+      set({ setup, selectedPanel: 0, notice: saveSetup(setup) })
     } catch (error) { set({ notice: String(error) }) }
   },
   setShowEnvelope: showEnvelope => set({ showEnvelope }),
+  setShowSeams: showSeams => set({ showSeams }),
+  setSelectedPanel: selectedPanel => set({ selectedPanel }),
   clear: () => {
     const setup = { ...EMPTY_PRINT_SETUP }
-    set({ setup, notice: saveSetup(setup) })
+    set({ setup, selectedPanel: 0, notice: saveSetup(setup) })
   },
 }))

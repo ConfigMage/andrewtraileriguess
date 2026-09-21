@@ -4,7 +4,7 @@ Evidence date: 2026-09-21. Commands ran in `C:\Project\FredricksonTrailerideaIgu
 
 | Check | Evidence and actual result | Status |
 | --- | --- | --- |
-| Typecheck, lint, tests, build | `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build`. All passed; 15 tests. Build gave a large-chunk warning. | Pass |
+| Typecheck, lint, tests, build | `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build`. All passed; 20 tests across three files. Build gave a large-chunk warning. | Pass |
 | Lockfile | `npm ls --depth=0` resolved all pinned packages; `npm ci --dry-run --offline --ignore-scripts --no-audit --no-fund` completed. | Pass |
 | Units and parameters | Tests covered conversion stability, rounding carry, nonfinite and impossible dimensions. Browser switch showed 16 ft as 4.88 m without altering the model. Minimum and maximum body parameters rendered. | Pass |
 | Profiles | Tests established distinct sampled nose widths and roof side heights. Browser selected all 12 combinations; canvas remained mounted. Flat and teardrop/rounded appearances were visually inspected. | Pass with limited visual sampling |
@@ -19,7 +19,7 @@ Evidence date: 2026-09-21. Commands ran in `C:\Project\FredricksonTrailerideaIgu
 | Production preview | `npm run preview` at 127.0.0.1:4173 showed the Adventure model and section in a browser. | Pass |
 | Print setup | Deterministic tests cover blank and partial settings, exact and undersized build dimensions, one-width thickness threshold, invalid saved values, and storage-write failure. Production preview showed the Family shell fit a 30 x 10 x 11 ft box, then exceed a 30 x 8 x 11 ft box by 11.9 in in width. A 30 mm extrusion width flagged the 28 mm wall. Metric display converted the same machine values and refresh restored them. Temporary values were cleared. The 3D box was visually inspected in both colors and the browser reported no console errors. | Pass for local checks; slicer and target hardware unverified |
 | Performance | No sustained interaction, memory-growth, or FPS measurement. | Unverified |
-| Repository state | Git main tracks the user-provided GitHub origin. Generated node_modules, dist, and local Vercel metadata are ignored. The print setup diff contains only source and documentation for this slice; generated files remain ignored. | Pass |
+| Repository state | Git main tracks the user-provided GitHub origin. Generated node_modules, dist, and local Vercel metadata are ignored. Source and documentation changes are scoped to the panel planning slice; generated files remain ignored. | Pass |
 
 ## Requirement map
 
@@ -34,3 +34,10 @@ Evidence date: 2026-09-21. Commands ran in `C:\Project\FredricksonTrailerideaIgu
 | R20 | Recovery branches and labeled controls | Forced WebGL failure and accessibility audit |
 
 Passing automated checks does not establish engineering approval or complete the remaining manual gates.
+
+## Slice 8 exit evidence: build-volume panel plan
+
+- `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed after the slice. The suite has 20 tests across three files. Vite still reports a JavaScript chunk above 500 kB.
+- The production preview at 127.0.0.1:4173 displayed 946 sections for a 0.256 m cube on the Adventure design, with six family counts, visible seams, selected section bounds, a selected roof surface patch, and four opening cut warnings. A 0.5 m usable length reduced the count to 639, and restoring 0.256 m restored 946. Metric display showed all machine dimensions as 0.256 m. Browser console errors: none observed.
+- Automated tests verify every planned envelope fits each 0.256 m machine axis, wall panels omit an opening, opening cut warnings appear, counts respond to machine/body changes, missing settings make no claim, and tiny volumes block before massive allocation.
+- This acceptance covers conceptual panel planning only. Separate solid meshes, watertight validation, joints, manufacturing allowances, slicer import, physical printing, and target-hardware performance remain unverified and unimplemented.
