@@ -1,0 +1,8 @@
+# Send only the files needed to build the static app.
+/*
+!src
+!index.html
+!package.json
+!package-lock.json
+!tsconfig.json
+!vite.config.ts
