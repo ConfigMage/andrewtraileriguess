@@ -1,6 +1,6 @@
 # Current state
 
-## Status: print setup slice implemented locally, Vercel deployment pending
+## Status: print setup slice implemented, Vercel deployment pending
 
 As of 2026-09-21, the frontend application builds and runs locally. Required concept controls, procedural shell, section view, real sidewall cutouts, placement warnings, history, autosave, named saves, and JSON format are implemented. Git was initialized locally with main and the user-provided GitHub repository as origin. The remote advertised no branches or tags before the initial push.
 
@@ -21,6 +21,7 @@ As of 2026-09-21, the frontend application builds and runs locally. Required con
 ## Print setup slice
 
 - User-entered usable build length, width, height, and extrusion width are kept separate from trailer design JSON in a dedicated localStorage key. Blank values make no fit claim. Settings can be cleared.
+- User feedback showed the earlier Print setup label implied automatic splitting. The UI now explicitly calls this a one-piece fit check; panelization remains a separate possible slice.
 - The fit check compares the unrotated shell body with the entered box. It reports each axis and a shortage where relevant. The scene shows a green or orange reference box when all three dimensions are entered and Show build box is enabled.
 - A thickness sanity check flags wall, roof, or floor thickness below one entered extrusion width. This does not model perimeter count, support, orientation, material behavior, or strength.
 - Typecheck, lint, 15 tests, and production build passed. A browser check used 30 x 10 x 11 ft and 30 x 8 x 11 ft boxes on the current Family design, plus a 30 mm extrusion width. Fit, width shortage, wall warning, unit conversion, refresh persistence, and Clear setup behaved as expected. No browser console errors were reported. Screenshots were visually inspected but not saved as files.
@@ -49,7 +50,7 @@ Browser screenshots were displayed in the task during inspection, but this brows
 
 ## Next practical actions
 
-1. Review the print setup slice with real printer values. After user review, implement the dimensioned section inspector as the next selected slice.
+1. Review the print setup slice with real printer values. Decide whether a panel and seam planner should come before the dimensioned section inspector, then implement the selected slice.
 2. Perform keyboard-only and screen-reader review and correct any failures.
 3. Exercise blocked storage, WebGL failure, valid JSON browser import/export, and sustained interaction on target hardware.
 4. If future manufacturing data arrives, define a separate validated requirements layer before adding estimates or production export.

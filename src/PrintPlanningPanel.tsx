@@ -39,16 +39,16 @@ export function PrintPlanningPanel() {
   const notice = usePrintStore(state => state.notice)
   const result = checkPrintSetup(body, setup)
   return <section className="panel-section print-planning" aria-labelledby="print-planning-title">
-    <h3 id="print-planning-title">Print setup <span>CONCEPT CHECK</span></h3>
-    <p>Enter your machine's usable build space. No printer is assumed.</p>
+    <h3 id="print-planning-title">Whole-shell fit <span>SINGLE PIECE</span></h3>
+    <p>Enter usable machine space to check this shell as one piece. This does not divide it into printable parts.</p>
     <div className="print-fields">{(['buildLength', 'buildWidth', 'buildHeight', 'extrusionWidth'] as const).map(field => <PrintFieldControl key={field} field={field}/>)}</div>
-    <div className={`print-status ${result.fits === false ? 'print-fail' : result.fits === true ? 'print-pass' : ''}`} role="status">{result.fits === null ? 'Enter all three usable dimensions to check fit.' : result.fits ? 'Shell dimensions fit the entered box.' : 'Shell exceeds the entered box.'}</div>
+    <div className={`print-status ${result.fits === false ? 'print-fail' : result.fits === true ? 'print-pass' : ''}`} role="status">{result.fits === null ? 'Enter all three usable dimensions to check one-piece fit.' : result.fits ? 'The one-piece shell fits by dimensions.' : 'The one-piece shell exceeds the box.'}</div>
     <ul className="print-axis-list">{result.axes.map(axis => <li key={axis.field} className={axis.fits === false ? 'print-fail' : axis.fits === true ? 'print-pass' : ''}><span>{axis.field[0].toUpperCase() + axis.field.slice(1)}</span><b>{formatLength(axis.shell, unit)} / {axis.usable === null ? 'not set' : formatLength(axis.usable, unit)}</b>{axis.remaining !== null && <small>{axis.remaining < 0 ? `Short by ${formatLength(-axis.remaining, unit)}` : `${formatLength(axis.remaining, unit)} spare`}</small>}</li>)}</ul>
-    <p className="print-caveat">Fit compares the unrotated shell only. It excludes chassis and tongue, and does not assess supports or tool access.</p>
+    <p className="print-caveat">This compares the unrotated shell only. It excludes chassis and tongue, and does not assess supports or tool access. Splitting it would require a separate seam and joint plan.</p>
     <h4>Thickness sanity check</h4>
     {result.thickness ? <ul className="print-thickness-list">{result.thickness.map(item => <li key={item.field} className={item.meetsOneWidth ? 'print-pass' : 'print-fail'}><span>{item.field[0].toUpperCase() + item.field.slice(1)}</span><b>{Math.round(item.thickness * 1000)} mm</b><small>{item.widths.toFixed(1)} extrusion widths{item.meetsOneWidth ? '' : ' · below one width'}</small></li>)}</ul> : <p className="print-caveat">Enter an extrusion width to compare it with wall, roof, and floor thickness.</p>}
     <p className="print-caveat">One-width checks are illustrative and do not establish printability or strength.</p>
-    <div className="print-actions"><label><input type="checkbox" checked={showEnvelope} onChange={event => setShowEnvelope(event.target.checked)}/> Show build box</label><button type="button" onClick={clear}>Clear setup</button></div>
+    <div className="print-actions"><label><input type="checkbox" checked={showEnvelope} onChange={event => setShowEnvelope(event.target.checked)}/> Show machine box</label><button type="button" onClick={clear}>Clear setup</button></div>
     <p className="print-caveat">Machine values are saved only in this browser, separately from design JSON.</p>
     {notice && <p className="print-storage-notice" role="alert">{notice}</p>}
   </section>

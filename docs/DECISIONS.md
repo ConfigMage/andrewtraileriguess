@@ -98,3 +98,8 @@ Date / decision / alternatives considered / reason / affected contract / validat
 - The one-width check flags only thickness below the entered extrusion width. It does not infer perimeter count, supported overhang, layer adhesion, or strength. Prusa's modeling guidance identifies features thinner than one perimeter as a slicing risk, but real outcomes depend on the machine and slicer.
 - Machine setup is separate from the design document so exporting or loading a trailer does not silently attach local printer assumptions to it. The setup persists in a separate browser key, is not undoable with design history, and can be cleared explicitly.
 - Section measurement remains the next proposed slice after user review. No section inspector was added here.
+
+## 2026-09-21 print-fit wording correction
+
+- User feedback showed that Print setup and Components & print suggested automatic part generation. The interface now names the feature a one-piece whole-shell fit check and states that it does not split the shell.
+- A panel and seam planner is a distinct future slice. It must place cuts around openings, report actual part bounds, and define a joint strategy before claiming to create printable components. A simple color change or box overlay cannot satisfy that goal.
